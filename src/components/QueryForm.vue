@@ -1,18 +1,20 @@
 <template>
-  <form action="" class="form">
+  <form class="form" @submit.prevent="onSubmit">
     <!-- Based on Sara Soueidan's method for accessible checkboxes: https://www.sarasoueidan.com/blog/inclusively-hiding-and-styling-checkboxes-and-radio-buttons/ -->
     <label
       v-for="checkbox in locationList"
       :key="checkbox.name"
       :for="checkbox.name"
-      :class="{ 'is-checked': checkbox.checked }"
       class="form__checkbox-label text-inverse body-primary"
     >
-      <input type="checkbox" :id="checkbox.name" class="form__checkbox-input" />
+      <input
+        type="checkbox"
+        :id="checkbox.name"
+        :value="checkbox.searchLocation"
+        v-model="locationQuery"
+        class="form__checkbox-input"
+      />
       <!-- TODO: Maybe put this svg in another component for legibility -->
-      <!-- width="32"
-      height="32" 
-      viewBox="-4 -4 39 39" -->
       <svg
         width="32"
         height="32"
@@ -22,8 +24,6 @@
         class="form__checkbox-svg"
       >
         <!-- The background -->
-        <!-- width="35"
-          height="35" -->
         <rect
           class="form__checkbox-background"
           width="35"
@@ -47,12 +47,19 @@
       </svg>
       <span class="form__label-text">{{ checkbox.label }}</span>
     </label>
+    <button @click="$emit('formSubmit', locationQuery)" :class="[locationQuery.length ? activeClass : '']">Get Snow Report</button>
   </form>
 </template>
 
 <script>
 export default {
   name: 'QueryForm',
-  props: ['locationList']
+  props: ['locationList'],
+  data() {
+    return {
+      locationQuery: [],
+      activeClass: 'is-active'
+    };
+  }
 };
 </script>
