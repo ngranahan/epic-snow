@@ -1,0 +1,31 @@
+// Base Font Size (used for calulating rem values)
+$html-font-size: 16px;
+
+// Breakpoints
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1536px
+);
+
+// Colors
+$black: #000;
+$white: #fff;
+$gray-dk: #2F2F2F;
+$green: #C5FFF7;
+
+// Fonts
+$font-sans: 'Teko', sans-serif;
+$font-light: $green;
+
+// Grid
+$column-count: 12;
+$column-gutter: 10px;
+$outer-margin: 30px;
+$outer-margin-md: 40px;
+
+// Transitions
+$duration-default: 250ms;
+$ease-default: ease-in-out;

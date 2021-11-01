@@ -1,0 +1,21 @@
+@use '../abstracts' as *;
+
+.text {
+  color: $gray-dk;
+}
+
+.text-inverse {
+  color: $green;
+}
+
+.heading-primary {
+  font-family: $font-sans;
+  font-weight: 600;
+  font-size: rem(60);
+}
+
+.body-primary {
+  font-family: $font-sans;
+  font-weight: 300;
+  font-size: rem(20);
+}

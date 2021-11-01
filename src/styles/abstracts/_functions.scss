@@ -1,0 +1,25 @@
+@use "sass:math";
+@use 'variables' as *;
+
+// Breakpoint Lookup
+@function get-breakpoint($key) {
+  @if map-has-key($breakpoints, $key) {
+    @return map-get($breakpoints, $key);
+  }
+  @error 'Unknown key: `#{$key}` in $breakpoints.';
+}
+
+// Strip units from string
+@function stripUnit($value) {
+  @return math.div($value, $value * 0 + 1);
+}
+
+// Convert pixel value to rems with or without `px`
+@function rem($pxValue) {
+  @return #{math.div(stripUnit($pxValue), stripUnit($html-font-size))}rem;
+}
+
+// Columns
+@function col-percentage($cols, $max: $column-count) {
+  @return percentage(math.div($cols, $max));
+}

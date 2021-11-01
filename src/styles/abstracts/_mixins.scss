@@ -1,0 +1,60 @@
+@use 'variables' as *;
+@use 'functions' as *;
+
+// Media Queries
+@mixin screen($name) {
+  @media (min-width: get-breakpoint($name)) {
+    @content;
+  }
+}
+
+// Transitions
+@mixin transition($property, $duration: $duration-default, $ease: $ease-default, $delay: 0) {
+  transition: {
+    property: $property;
+    duration: $duration;
+    timing-function: $ease;
+    delay: $delay;
+  }
+}
+
+// Grid
+@mixin container-base {
+  display: flex;
+  flex-flow: row wrap;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@mixin container {
+  @include container-base;
+  @if $outer-margin >= $column-gutter {
+    width: calc(100% - (($outer-margin - $column-gutter) * 2));
+  } @else {
+    width: 100%;
+    @warn '$outer-margin is less than half of the column gutter so it is being ignored';
+  }
+  max-width: get-breakpoint(xxl);
+
+  @include screen(md) {
+    @if $outer-margin-md >= $column-gutter {
+      width: calc(100% - (($outer-margin-md - $column-gutter) * 2));
+    } @else {
+      width: 100%;
+      @warn '$outer-margin is less than the column gutter so it is being ignored';
+    }
+  }
+}
+
+@mixin container-md {
+  @include screen(md) {
+    @include container-base;
+    @if $outer-margin-md >= $column-gutter {
+      width: calc(100% - (($outer-margin-md - $column-gutter) * 2));
+    } @else {
+      width: 100%;
+      @warn '$outer-margin is less than the column gutter so it is being ignored';
+    }
+    max-width: get-breakpoint(xxl);
+  }
+}

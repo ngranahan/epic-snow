@@ -1,0 +1,9 @@
+@use '../abstracts' as *;
+
+.container {
+  @include container;
+}
+
+.container-md {
+  @include container-md;
+}
