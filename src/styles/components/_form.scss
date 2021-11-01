@@ -1,0 +1,67 @@
+@use '../abstracts/' as *;
+
+.form {
+  padding: rem(30);
+  background-color: rgba($color: $green, $alpha: 0.06);
+  border-radius: $border-radius;
+  width: 100%;
+}
+
+.form__checkbox-label {
+  display: block;
+  position: relative;
+}
+
+.form__checkbox-input {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  opacity: 0;
+
+  &:focus + svg {
+    outline: 2px solid $green;
+    outline-offset: 2px;
+  }
+
+  &:focus:not(:focus-visible) + svg {
+    outline: none;
+  }
+}
+
+.form__checkbox-svg {
+  display: inline-block;
+  margin-right: rem(10);
+  width: 1em;
+  height: 1em;
+}
+
+.form__checkbox-background {
+  stroke: $green;
+
+  .form__checkbox-input:checked + svg & {
+    fill: $green;
+
+    @media screen and (-ms-high-contrast: active) {
+      fill: windowText;
+    }
+  }
+
+  @media screen and (-ms-high-contrast: active) {
+    stroke: windowText;
+  }
+}
+
+.form__checkbox-checkmark {
+  .form__checkbox-input:checked + svg & {
+    stroke: $gray-dk;
+
+    @media screen and (-ms-high-contrast: active) {
+      stroke: highlight;
+    }
+  }
+}
+
+.form__checkbox-background,
+.form__checkbox-checkmark {
+  @include transition(all, $duration-default)
+}

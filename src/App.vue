@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <h1 class="header__title text-inverse heading-primary">Epic Snow Report</h1>
+    <h1 class="header__title text-brand heading-primary">Epic Snow Report</h1>
   </header>
   <main class="main">
     <div class="container">
