@@ -1,0 +1,30 @@
+@use '../abstracts' as *;
+
+.footer {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.footer__nav {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  margin-bottom: rem(15);
+}
+
+.footer__nav-list {
+  display: flex;
+  justify-content: center;
+}
+
+.footer__nav-item:first-child {
+  margin-right: rem(20);
+}
+
+.footer__background {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}

@@ -1,0 +1,6 @@
+@use '../abstracts' as *;
+
+.header {
+  padding: rem(60);
+  background-color: $gray-dk;
+}
