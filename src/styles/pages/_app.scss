@@ -1,5 +1,7 @@
 @use '../abstracts/' as *;
 
 .app-body {
-  background-color: $gray-dk;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

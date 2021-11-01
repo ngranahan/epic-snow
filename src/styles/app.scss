@@ -6,7 +6,9 @@
 @use 'base/grid';
 
 // Components
-// @use 'components/example';
+@use 'components/footer';
+@use 'components/header';
+@use 'components/main';
 
 // Pages
 @use 'pages/app'

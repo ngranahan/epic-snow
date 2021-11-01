@@ -1,0 +1,6 @@
+@use '../abstracts/' as *;
+
+.main {
+  flex: 1 0 auto;
+  background-color: $gray-dk;
+}
