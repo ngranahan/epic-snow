@@ -5,6 +5,10 @@
 }
 
 .text-inverse {
+  color: $white;
+}
+
+.text-brand {
   color: $green;
 }
 
@@ -14,8 +18,27 @@
   font-size: rem(60);
 }
 
+.heading-secondary {
+  font-family: $font-sans;
+  font-weight: 600;
+  font-size: rem(24);
+}
+
 .body-primary {
   font-family: $font-sans;
   font-weight: 300;
   font-size: rem(20);
+}
+
+.body-secondary {
+  font-family: $font-sans;
+  font-weight: 300;
+  font-size: rem(18);
+  text-transform: uppercase;
+}
+
+.body-tertiary {
+  font-family: $font-sans;
+  font-weight: 300;
+  font-size: rem(14);
 }

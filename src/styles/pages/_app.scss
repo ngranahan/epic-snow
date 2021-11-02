@@ -1,6 +1,10 @@
 @use '../abstracts/' as *;
 
-.app-body {
+.app {
+  height: 100%;
+}
+
+.app__body {
   display: flex;
   flex-direction: column;
   height: 100%;

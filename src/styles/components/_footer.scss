@@ -1,8 +1,13 @@
 @use '../abstracts' as *;
 
 .footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   position: relative;
   flex-shrink: 0;
+  height: rem(254);
+  background-color: $gray-dk;
 }
 
 .footer__nav {
