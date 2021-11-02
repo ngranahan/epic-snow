@@ -1,15 +1,23 @@
 <template>
   <div class="app__body">
     <header class="header">
-      <h1 class="header__title text-brand heading-primary">Epic Snow Report</h1>
+      <h1 class="header__title text-brand heading-primary">Epic Pass Snow Report</h1>
     </header>
     <main class="main">
       <div class="container">
         <!-- Render form on load -->
-        <QueryForm v-if="!results.length" :locationList="locationList" @formSubmit="getData"></QueryForm>
+        <QueryForm
+          v-if="!results.length"
+          :locationList="locationList"
+          :quickSearch="quickSearch"
+          @formSubmit="getData"
+        ></QueryForm>
         <!-- Render dashboard on submit -->
-        <!-- TODO: Results/Card Rendering -->
-        <Card v-for="result in results" :key="result.data.nearest_area[0].areaName[0].value"></Card>
+        <Card
+          v-for="result in results"
+          :key="result.location"
+          :result="result"
+        ></Card>
       </div>
     </main>
     <footer class="footer">
@@ -18,13 +26,11 @@
         <nav class="footer__nav">
           <ul class="footer__nav-list">
             <li class="footer__nav-item"><a href="#" class="footer__nav-link text body-base">About</a></li>
-            <li class="footer__nav-item"><a href="#" class="footer__nav-link text body-base">GitHub</a></li>
+            <li class="footer__nav-item"><a href="https://github.com/ngranahan/epic-snow" class="footer__nav-link text body-base">GitHub</a></li>
           </ul>
         </nav>
       </div>
     </footer>
-    <!-- <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" /> -->
   </div>
 </template>
 
@@ -32,6 +38,7 @@
 import QueryForm from './components/QueryForm.vue';
 import MountainsSVG from './components/MountainsSVG.vue';
 import Card from './components/Card.vue';
+import locationList from './utils/locationList.js';
 
 export default {
   name: 'App',
@@ -43,55 +50,65 @@ export default {
   data() {
     return {
       quickSearch: [
-        'allLocations',
-        'northEast',
-        'west',
-        'midWest',
-        'international'
-      ],
-      locationList: [
         {
-          name: 'vail',
-          label: 'Vail, CO',
-          searchLocation: 'vail,co',
-          region: 'west'
+          name: 'all',
+          label: 'All US Mountains'
         },
         {
-          name: 'whistler',
-          label: 'Whistler Blackcomb, BC',
-          searchLocation: 'whistler,bc',
-          region: 'west'
+          name: 'midWest',
+          label: 'Mid West Mountains'
         },
         {
-          name: 'keystone',
-          label: 'Keystone, CO',
-          searchLocation: 'keystone,co',
-          region: 'west'
+          name: 'northEast',
+          label: 'North East Mountains'
+        },
+        {
+          name: 'west',
+          label: 'West Coast Mountains'
         }
       ],
+      locationList,
       results: []
     };
   },
   methods: {
     async getData(locationQuery) {
-      console.log('getting data');
       const baseUrl = 'https://api.worldweatheronline.com/premium/v1/ski.ashx';
       const key = process.env.VUE_APP_API_KEY;
       try {
-        for (const location of locationQuery) {
+        let queryArray;
+        if (locationQuery.length === 1 && locationQuery[0] === 'all') {
+          queryArray = this.locationList.map(location => location.searchLocation);
+        } else if (locationQuery.length === 1 && this.quickSearch.filter(location => location.name === locationQuery[0]).length) {
+          queryArray = this.locationList.filter(location => location.region === locationQuery[0]).map(location => location.searchLocation);
+        } else {
+          queryArray = locationQuery;
+        }
+        for (const location of queryArray) {
           const res = await fetch(`${baseUrl}?key=${key}&q=${location}&num_of_days=3&format=json&includeLocation=yes`);
           if (res.ok) {
             const data = await res.json();
-            this.results.push(data);
-            console.log('data', data);
+            if (!data.error) {
+              data.location = this.getLocationLabel(location);
+              this.results.push(data);
+            } else {
+              // TODO: Handle error state in the UI
+              // No results for a specific location. Probably still want to load a card for that mountain but just include a message about no snow report
+              throw new Error(data.error);
+            }
           } else {
             // TODO: Handle error state in the UI
+            // No results, render error message in search form
             throw new Error('Error fetching results.');
           }
         }
       } catch (e) {
         console.error(e);
       }
+    },
+    getLocationLabel(location) {
+      const locationObj = this.locationList.find(item => { return item.searchLocation === location; });
+      return locationObj.label;
     },
     cacheData() {
       // TODO: Cache data
