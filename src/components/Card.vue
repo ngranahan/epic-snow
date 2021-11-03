@@ -13,7 +13,7 @@
             <p v-else class="card__subtitle body-tertiary text-brand">{{ weather.date }}</p>
           </div>
           <div v-if="!result.vueError" class="card__intro-data">
-            <p class="card__intro-data-figure heading-primary text-brand">{{ weather.chanceofsnow }}%</p>
+            <p class="card__intro-data-figure heading-tertiary text-brand">{{ weather.chanceofsnow }}%</p>
             <p class="card__intro-data-text body-tertiary text-brand">Chance of Snow</p>
           </div>
         </div>

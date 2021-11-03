@@ -3,6 +3,7 @@
 .header {
   padding: rem(40);
   background-color: $gray-dk;
+  margin-bottom: -1px;
   
   @include screen(md) {
     padding: rem(60);

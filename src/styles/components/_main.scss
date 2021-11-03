@@ -4,6 +4,7 @@
   flex: 1 0 auto;
   background-color: $gray-dk;
   padding: rem(60) 0 rem(60);
+  margin-bottom: -1px;
   
   @include screen(md) {
     padding: rem(100) 0 rem(160);

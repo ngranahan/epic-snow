@@ -15,8 +15,12 @@
 .heading-primary {
   font-family: $font-sans;
   font-weight: 600;
-  font-size: rem(60);
+  font-size: rem(40);
   line-height: 1.2;
+  
+  @include screen(md) {
+    font-size: rem(60);
+  }
 }
 
 .heading-secondary {
@@ -25,10 +29,16 @@
   font-size: rem(24);
 }
 
+.heading-tertiary {
+  font-family: $font-sans;
+  font-weight: 600;
+  font-size: rem(60);
+  line-height: 1.2;
+}
+
 .body-primary {
   font-family: $font-sans;
   font-weight: 300;
-  font-size: rem(20);
 }
 
 .body-secondary {
