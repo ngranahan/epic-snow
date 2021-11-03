@@ -4,6 +4,6 @@
   @include container;
 }
 
-.container-md {
-  @include container-md;
+.container--spread {
+  justify-content: space-between;
 }

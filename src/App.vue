@@ -1,10 +1,10 @@
 <template>
   <div class="app__body">
     <header class="header">
-      <h1 class="header__title text-brand heading-primary">Epic Pass Snow Report</h1>
+      <h1 class="header__title text-brand heading-primary"><a href="/">Epic Pass Snow Report</a></h1>
     </header>
     <main class="main">
-      <div class="container">
+      <div class="container container--spread">
         <!-- Render form on load -->
         <QueryForm
           v-if="!results.length"
@@ -19,14 +19,15 @@
           :result="result"
         ></Card>
       </div>
+      <p class="body-primary text-brand" v-if="error">{{ error }}</p>
     </main>
     <footer class="footer">
       <MountainsSVG></MountainsSVG>
       <div class="container">
         <nav class="footer__nav">
           <ul class="footer__nav-list">
-            <li class="footer__nav-item"><a href="#" class="footer__nav-link text body-base">About</a></li>
-            <li class="footer__nav-item"><a href="https://github.com/ngranahan/epic-snow" class="footer__nav-link text body-base">GitHub</a></li>
+            <li class="footer__nav-item"><a href="#" class="footer__nav-link text body-primary">About</a></li>
+            <li class="footer__nav-item"><a href="https://github.com/ngranahan/epic-snow" class="footer__nav-link text body-primary">GitHub</a></li>
           </ul>
         </nav>
       </div>
@@ -68,7 +69,8 @@ export default {
         }
       ],
       locationList,
-      results: []
+      results: [],
+      error: ''
     };
   },
   methods: {
@@ -88,23 +90,29 @@ export default {
           const res = await fetch(`${baseUrl}?key=${key}&q=${location}&num_of_days=3&format=json&includeLocation=yes`);
           if (res.ok) {
             const data = await res.json();
-            if (!data.error) {
+            if (!data.data.error) {
               data.location = this.getLocationLabel(location);
+              data.data.weather[0].totalSnowfall_in = this.formatSnowfall(data.data.weather[0].totalSnowfall_cm);
               this.results.push(data);
             } else {
-              // TODO: Handle error state in the UI
-              // No results for a specific location. Probably still want to load a card for that mountain but just include a message about no snow report
-              throw new Error(data.error);
+              // No results for a given mountain. Return error message to the card component and log error in the console.
+              data.location = this.getLocationLabel(location);
+              data.vueError = 'Bummer! Looks like there\'s no snow report for this mountain.'
+              this.results.push(data);
+              console.error(data.data.error[0].msg);
             }
           } else {
-            // TODO: Handle error state in the UI
-            // No results, render error message in search form
-            throw new Error('Error fetching results.');
+            // No results for any mountains, render user friendly error message and log error.
+            this.error = 'If you french fry when you\'re supposed to pizza, you\'re gonna have a bad time. No snow report right now. Check back l8r.'
+            console.error('Error fetching results');
           }
         }
       } catch (e) {
         console.error(e);
       }
+    },
+    formatSnowfall(snowfallCM) {
+      return (snowfallCM / 2.54).toFixed(2);
     },
     getLocationLabel(location) {
       const locationObj = this.locationList.find(item => { return item.searchLocation === location; });

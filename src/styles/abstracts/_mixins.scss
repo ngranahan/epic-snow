@@ -45,16 +45,3 @@
     }
   }
 }
-
-@mixin container-md {
-  @include screen(md) {
-    @include container-base;
-    @if $outer-margin-md >= $column-gutter {
-      width: calc(100% - (($outer-margin-md - $column-gutter) * 2));
-    } @else {
-      width: 100%;
-      @warn '$outer-margin is less than the column gutter so it is being ignored';
-    }
-    max-width: get-breakpoint(xxl);
-  }
-}

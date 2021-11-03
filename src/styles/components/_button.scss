@@ -1,0 +1,27 @@
+@use '../abstracts' as *;
+
+.button {
+  display: block;
+  padding: rem(10) rem(40);
+  border: 1px solid transparent;
+  border-radius: 5px;
+  @include transition(all, $duration-default)
+}
+
+.button--primary {
+  color: $green;
+  border-color: $green;
+
+  &:hover:not(.is-disabled),
+  &:focus:not(.is-disabled) {
+    color: $gray-dk;
+    background-color: $green;
+  }
+
+  &.is-disabled {
+    color: $gray-lt;
+    background-color: $gray-md;
+    border-color: $gray-md;
+    pointer-events: none;
+  }
+}
