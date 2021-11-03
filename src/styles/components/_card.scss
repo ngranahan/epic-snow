@@ -16,17 +16,23 @@
   }
 }
 
-.card__heading {
+.card__content:not(:first-child) {
+  padding-top: rem(40);
+  margin-top: rem(20);
+  border-top: 1px solid $green;
+}
+
+.card__intro {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
 }
 
-.card__heading-data-figure {
+.card__intro-data-figure {
   line-height: 0.8;
 }
 
-.card__heading-data-text {
+.card__intro-data-text {
   margin-top: rem(10);
 }
 
