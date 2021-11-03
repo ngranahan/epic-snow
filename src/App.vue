@@ -1,10 +1,10 @@
 <template>
   <div class="app__body">
     <header class="header">
-      <h1 class="header__title text-brand heading-primary">Epic Pass Snow Report</h1>
+      <h1 class="header__title text-brand heading-primary"><a href="/">Epic Pass Snow Report</a></h1>
     </header>
     <main class="main">
-      <div class="container">
+      <div class="container container--spread">
         <!-- Render form on load -->
         <QueryForm
           v-if="!results.length"
@@ -90,6 +90,7 @@ export default {
             const data = await res.json();
             if (!data.error) {
               data.location = this.getLocationLabel(location);
+              data.data.weather[0].totalSnowfall_in = this.formatSnowfall(data.data.weather[0].totalSnowfall_cm);
               this.results.push(data);
             } else {
               // TODO: Handle error state in the UI
@@ -105,6 +106,9 @@ export default {
       } catch (e) {
         console.error(e);
       }
+    },
+    formatSnowfall(snowfallCM) {
+      return (snowfallCM / 2.54).toFixed(2);
     },
     getLocationLabel(location) {
       const locationObj = this.locationList.find(item => { return item.searchLocation === location; });

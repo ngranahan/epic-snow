@@ -4,12 +4,63 @@
   padding: rem(40);
   background-color: rgba($color: $green, $alpha: 0.06);
   border-radius: $border-radius;
+  width: 100%;
+  margin-bottom: rem(20);
+
+  @include screen(md) {
+    width: calc((100% / 2) - rem(20));
+  }
+
+  @include screen(lg) {
+    width: calc((100% / 3) - rem(20));
+  }
+}
+
+.card__heading {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.card__heading-data-figure {
+  line-height: 0.8;
+}
+
+.card__heading-data-text {
+  margin-top: rem(10);
 }
 
 .card__table {
   width: 100%;
+  margin-top: rem(40);
+  border-bottom: 1px solid $gray-dk;
 }
 
-.card__table-row:nth-child(2) {
+.card__table-heading {
+  border-bottom: 1px solid $gray-dk;
+  padding: rem(10);
+}
+
+.card__table-heading:first-child {
+  text-align: left;
+}
+
+.card__table-heading:last-child {
+  text-align: right;
+}
+
+.card__table-row:nth-child(3) {
   background-color: $gray-dk;
+}
+
+.card__table-data {
+  padding: rem(10);
+}
+
+.card__table-data:last-child {
+  text-align: right;
+}
+
+.card__data {
+  margin-top: rem(40);
 }
