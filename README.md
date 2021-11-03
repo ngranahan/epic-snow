@@ -8,8 +8,10 @@ Mountain names and locations are stored in `src/utils/locationList.js` and used 
 
 While the API documentation indicates that 7 day ski weather forecast should be available, that feature doesn't seem to be working currently. The application has been structured in a way to render future weather forecast, based on the data structure outline in the API, though the results are currently only rendering the snow report for the current day.
 
+An API key needs to be defined in `.env.local` for local development.
+
 # Hosting and Deployment
-@TODO: Document heoku deployment
+The app is deployed on Netlfy and can be accessed [here](https://epic-snow.netlify.app/).
 
 ## Project setup
 ```
@@ -30,6 +32,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
