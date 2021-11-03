@@ -21,23 +21,13 @@
       </div>
       <p class="body-primary text-brand" v-if="error">{{ error }}</p>
     </main>
-    <footer class="footer">
-      <MountainsSVG></MountainsSVG>
-      <div class="container">
-        <nav class="footer__nav">
-          <ul class="footer__nav-list">
-            <li class="footer__nav-item"><a href="#" class="footer__nav-link text body-primary">About</a></li>
-            <li class="footer__nav-item"><a href="https://github.com/ngranahan/epic-snow" class="footer__nav-link text body-primary">GitHub</a></li>
-          </ul>
-        </nav>
-      </div>
-    </footer>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import QueryForm from './components/QueryForm.vue';
-import MountainsSVG from './components/MountainsSVG.vue';
+import Footer from './components/Footer.vue';
 import Card from './components/Card.vue';
 import locationList from './utils/locationList.js';
 
@@ -45,7 +35,7 @@ export default {
   name: 'App',
   components: {
     QueryForm,
-    MountainsSVG,
+    Footer,
     Card
   },
   data() {
