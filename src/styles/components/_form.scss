@@ -7,22 +7,42 @@
   width: 100%;
 }
 
+.form__heading {
+  margin-bottom: rem(40);
+}
+
 .form__group {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  margin-bottom: rem(40);
+  
+  @include screen(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include screen(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @include screen(xl) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
-.form__group:nth-child(1) {
-  padding-bottom: rem(20);
-  margin-bottom: rem(20);
+.form__group:nth-of-type(1) {
+  padding-bottom: rem(60);
+  margin-bottom: rem(40);
   border-bottom: 1px solid $green;
 }
-
 
 .form__checkbox-label {
   display: block;
   position: relative;
   margin: rem(10) 0;
+  &:hover,
+  &:focus {
+    cursor: pointer;
+  }
 }
 
 .form__checkbox-input {
@@ -77,4 +97,12 @@
 .form__checkbox-background,
 .form__checkbox-checkmark {
   @include transition(all, $duration-default)
+}
+
+.form__button:not(:last-child) {
+  margin-bottom: rem(30);
+}
+
+.form__button-submit {
+  margin: 0 auto;
 }

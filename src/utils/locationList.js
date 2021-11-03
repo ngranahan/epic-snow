@@ -27,7 +27,7 @@ export default [
     name: 'stowe',
     label: 'Stowe, VT',
     searchLocation: 'stowe,vt',
-    region: 'west'
+    region: 'northEast'
   },
   {
     name: 'afton',
