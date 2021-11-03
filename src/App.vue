@@ -82,8 +82,11 @@ export default {
             const data = await res.json();
             if (!data.data.error) {
               data.location = this.getLocationLabel(location);
-              data.data.weather[0].totalSnowfall_in = this.formatSnowfall(data.data.weather[0].totalSnowfall_cm);
+              data.data.weather.forEach(item => {
+                item.totalSnowfall_in = this.formatSnowfall(item.totalSnowfall_cm);
+              });
               this.results.push(data);
+              console.log(data);
             } else {
               // No results for a given mountain. Return error message to the card component and log error in the console.
               data.location = this.getLocationLabel(location);
