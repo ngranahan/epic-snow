@@ -2,9 +2,14 @@
 
 .about {
   position: relative;
-  padding: rem(60) rem(100);
+  padding: rem(60) 0;
   margin-bottom: rem(60);
   border-bottom: 1px solid $gray-dk;
+
+  @include screen(md) {
+    padding-right: rem(100);
+    padding-left: rem(100);
+  }
 }
 
 .about-slide-fade-enter-active {

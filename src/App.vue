@@ -84,9 +84,9 @@ export default {
               data.location = this.getLocationLabel(location);
               data.data.weather.forEach(item => {
                 item.totalSnowfall_in = this.formatSnowfall(item.totalSnowfall_cm);
+                item.date = this.formatDate(item.date);
               });
               this.results.push(data);
-              console.log(data);
             } else {
               // No results for a given mountain. Return error message to the card component and log error in the console.
               data.location = this.getLocationLabel(location);
@@ -104,15 +104,19 @@ export default {
         console.error(e);
       }
     },
+    formatDate(date) {
+      const isoDate = new Date(date);
+      let str = isoDate.toDateString();
+      const firstIndex = str.indexOf(' ');
+      str = str.slice(firstIndex + 1);
+      return str;
+    },
     formatSnowfall(snowfallCM) {
       return (snowfallCM / 2.54).toFixed(2);
     },
     getLocationLabel(location) {
       const locationObj = this.locationList.find(item => { return item.searchLocation === location; });
       return locationObj.label;
-    },
-    cacheData() {
-      // TODO: Cache data
     }
   }
 };
