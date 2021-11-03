@@ -1,0 +1,22 @@
+@use '../abstracts' as *;
+
+.about {
+  position: relative;
+  padding: rem(60) rem(100);
+  margin-bottom: rem(60);
+  border-bottom: 1px solid $gray-dk;
+}
+
+.about-slide-fade-enter-active {
+  transition: all .3s ease-out;
+}
+
+.about-slide-fade-leave-active {
+  transition: all .3s ease-in;
+}
+
+.about-slide-fade-enter-from,
+.about-slide-fade-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
+}

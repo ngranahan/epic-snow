@@ -1,4 +1,5 @@
 <template>
+<!-- TODO: Refactor to accomodate multiple items in weather array -->
   <div class="card">
     <div class="card__heading">
       <div class="card__text">
