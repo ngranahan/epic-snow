@@ -11,14 +11,14 @@
       <!-- Checkboxes based on Sara Soueidan's method for accessible checkboxes: https://www.sarasoueidan.com/blog/inclusively-hiding-and-styling-checkboxes-and-radio-buttons/ -->
       <label
         v-for="checkbox in locationList"
-        :key="checkbox.name"
-        :for="checkbox.name"
+        :key="checkbox.resortName"
+        :for="checkbox.resortName"
         class="form__checkbox-label text-inverse body-primary"
       >
         <input
           type="checkbox"
-          :id="checkbox.name"
-          :value="checkbox.searchLocation"
+          :id="checkbox.resortName"
+          :value="`${checkbox.location.lat},${checkbox.location.lng}`"
           v-model="locationQuery"
           class="form__checkbox-input"
         />
@@ -77,6 +77,9 @@ export default {
       disabledClass: 'is-disabled',
       quickSelect: ''
     };
+  },
+  mounted() {
+    console.log('locationQuery', this.locationQuery)
   }
 };
 </script>
