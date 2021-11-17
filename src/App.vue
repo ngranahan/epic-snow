@@ -6,14 +6,12 @@
     <main class="main">
       <div v-if="locationList.length">
         <div class="container container--spread">
-          <!-- Render form on load -->
           <QueryForm
             v-if="!results.length"
             :locationList="locationList"
             :quickSearch="quickSearch"
             @formSubmit="getData"
           ></QueryForm>
-          <!-- Render dashboard on submit -->
           <Card
             v-for="result in results"
             :key="result.location"
@@ -21,7 +19,9 @@
           ></Card>
         </div>
       </div>
-      <p v-else>Loading...</p>
+      <div v-else class="container">
+        <p class="body-primary text-brand">Loading Resorts...</p>
+      </div>
       <p class="body-primary text-brand" v-if="error">{{ error }}</p>
     </main>
     <Footer></Footer>
@@ -32,7 +32,6 @@
 import QueryForm from './components/QueryForm.vue';
 import Footer from './components/Footer.vue';
 import Card from './components/Card.vue';
-// import locationList from './utils/locationList.js';
 
 export default {
   name: 'App',
@@ -43,24 +42,6 @@ export default {
   },
   data() {
     return {
-      // quickSearch: [
-      //   {
-      //     name: 'all',
-      //     label: 'All US Mountains'
-      //   },
-      //   {
-      //     name: 'midWest',
-      //     label: 'Mid West Mountains'
-      //   },
-      //   {
-      //     name: 'northEast',
-      //     label: 'North East Mountains'
-      //   },
-      //   {
-      //     name: 'west',
-      //     label: 'West Coast Mountains'
-      //   }
-      // ],
       quickSearch: [],
       locationList: [],
       results: [],
