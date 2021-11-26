@@ -10,3 +10,12 @@
     padding: rem(100) 0 rem(160);
   }
 }
+
+.main-fade-enter-active,
+.main-fade-leave-active {
+  transition: opacity .5s;
+}
+.main-fade-enter,
+.main-fade-leave-to {
+  opacity: 0;
+}

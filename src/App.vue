@@ -4,24 +4,26 @@
       <h1 class="header__title text-brand heading-primary"><a href="/">Epic Pass Snow Report</a></h1>
     </header>
     <main class="main">
-      <div v-if="locationList.length">
-        <div class="container container--spread">
-          <QueryForm
-            v-if="!results.length"
-            :locationList="locationList"
-            :quickSearch="quickSearch"
-            @formSubmit="getData"
-          ></QueryForm>
-          <Card
-            v-for="result in results"
-            :key="result.location"
-            :result="result"
-          ></Card>
+      <transition name="main-fade">
+        <div v-if="locationList.length">
+          <div class="container container--spread">
+            <QueryForm
+              v-if="!results.length"
+              :locationList="locationList"
+              :quickSearch="quickSearch"
+              @formSubmit="getData"
+            ></QueryForm>
+            <Card
+              v-for="result in results"
+              :key="result.location"
+              :result="result"
+            ></Card>
+          </div>
         </div>
-      </div>
-      <div v-else class="container">
-        <Loading />
-      </div>
+        <div v-else>
+          <Loading />
+        </div>
+      </transition>
       <p class="body-primary text-brand" v-if="error">{{ error }}</p>
     </main>
     <Footer></Footer>
