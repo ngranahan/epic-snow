@@ -4,20 +4,23 @@
       <h1 class="header__title text-brand heading-primary"><a href="/">Epic Pass Snow Report</a></h1>
     </header>
     <main class="main">
-      <div class="container container--spread">
-        <!-- Render form on load -->
-        <QueryForm
-          v-if="!results.length"
-          :locationList="locationList"
-          :quickSearch="quickSearch"
-          @formSubmit="getData"
-        ></QueryForm>
-        <!-- Render dashboard on submit -->
-        <Card
-          v-for="result in results"
-          :key="result.location"
-          :result="result"
-        ></Card>
+      <div v-if="locationList.length">
+        <div class="container container--spread">
+          <QueryForm
+            v-if="!results.length"
+            :locationList="locationList"
+            :quickSearch="quickSearch"
+            @formSubmit="getData"
+          ></QueryForm>
+          <Card
+            v-for="result in results"
+            :key="result.location"
+            :result="result"
+          ></Card>
+        </div>
+      </div>
+      <div v-else class="container">
+        <Loading />
       </div>
       <p class="body-primary text-brand" v-if="error">{{ error }}</p>
     </main>
@@ -29,36 +32,20 @@
 import QueryForm from './components/QueryForm.vue';
 import Footer from './components/Footer.vue';
 import Card from './components/Card.vue';
-import locationList from './utils/locationList.js';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'App',
   components: {
     QueryForm,
     Footer,
-    Card
+    Card,
+    Loading
   },
   data() {
     return {
-      quickSearch: [
-        {
-          name: 'all',
-          label: 'All US Mountains'
-        },
-        {
-          name: 'midWest',
-          label: 'Mid West Mountains'
-        },
-        {
-          name: 'northEast',
-          label: 'North East Mountains'
-        },
-        {
-          name: 'west',
-          label: 'West Coast Mountains'
-        }
-      ],
-      locationList,
+      quickSearch: [],
+      locationList: [],
       results: [],
       error: ''
     };
@@ -70,9 +57,9 @@ export default {
       try {
         let queryArray;
         if (locationQuery.length === 1 && locationQuery[0] === 'all') {
-          queryArray = this.locationList.map(location => location.searchLocation);
+          queryArray = this.locationList.map(location => `${location.location.lat},${location.location.lng}`);
         } else if (locationQuery.length === 1 && this.quickSearch.filter(location => location.name === locationQuery[0]).length) {
-          queryArray = this.locationList.filter(location => location.region === locationQuery[0]).map(location => location.searchLocation);
+          queryArray = this.locationList.filter(location => location.region === locationQuery[0]).map(location => `${location.location.lat},${location.location.lng}`);
         } else {
           queryArray = locationQuery;
         }
@@ -115,8 +102,36 @@ export default {
       return (snowfallCM / 2.54).toFixed(2);
     },
     getLocationLabel(location) {
-      const locationObj = this.locationList.find(item => { return item.searchLocation === location; });
+      const lat = parseFloat(location.split(',')[0]);
+      const lng = parseFloat(location.split(',')[1]);
+      const locationObj = this.locationList.find(item => { return item.location.lat === lat && item.location.lng === lng; });
       return locationObj.label;
+    },
+    formatLabel(text) {
+      const words = text.match(/[A-Za-z][a-z]*/g) || [];
+      const capitalized = words.map(word => {return word.charAt(0).toUpperCase() + word.substring(1)});
+      return capitalized.length > 1 ? capitalized.join('-') : capitalized[0];
+    }
+  },
+  async mounted() {
+    const res = await fetch(`https://b2y7xrww3j.execute-api.us-east-1.amazonaws.com/production/resorts`);
+    if (res.ok) {
+      const data = await res.json();
+      const quickSearch = [
+        {
+          name: 'all',
+          label: 'All Mountains'
+        }
+      ];
+      Object.keys(data.regions).forEach(region => {
+        const regionObj = {
+          name: region,
+          label: this.formatLabel(region)
+        }
+        quickSearch.push(regionObj)
+      })
+      this.quickSearch = quickSearch;
+      this.locationList = data.resorts;
     }
   }
 };
