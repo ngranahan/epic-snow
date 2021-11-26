@@ -20,7 +20,7 @@
         </div>
       </div>
       <div v-else class="container">
-        <p class="body-primary text-brand">Loading Resorts...</p>
+        <Loading />
       </div>
       <p class="body-primary text-brand" v-if="error">{{ error }}</p>
     </main>
@@ -32,13 +32,15 @@
 import QueryForm from './components/QueryForm.vue';
 import Footer from './components/Footer.vue';
 import Card from './components/Card.vue';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'App',
   components: {
     QueryForm,
     Footer,
-    Card
+    Card,
+    Loading
   },
   data() {
     return {

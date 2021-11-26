@@ -77,9 +77,6 @@ export default {
       disabledClass: 'is-disabled',
       quickSelect: ''
     };
-  },
-  mounted() {
-    console.log('locationQuery', this.locationQuery)
   }
 };
 </script>
