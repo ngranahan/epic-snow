@@ -4,8 +4,8 @@
       <h1 class="header__title text-brand heading-primary"><a href="/">Epic Pass Snow Report</a></h1>
     </header>
     <main class="main">
-      <transition name="main-fade">
-        <div v-if="locationList.length">
+      <div v-if="locationList.length">
+        <transition name="main-fade">
           <div class="container container--spread">
             <QueryForm
               v-if="!results.length"
@@ -19,11 +19,11 @@
               :result="result"
             ></Card>
           </div>
-        </div>
-        <div v-else>
-          <Loading />
-        </div>
-      </transition>
+        </transition>
+      </div>
+      <div v-else>
+        <Loading />
+      </div>
       <p class="body-primary text-brand" v-if="error">{{ error }}</p>
     </main>
     <Footer></Footer>
@@ -116,24 +116,37 @@ export default {
     }
   },
   async mounted() {
-    const res = await fetch(`https://b2y7xrww3j.execute-api.us-east-1.amazonaws.com/production/resorts`);
-    if (res.ok) {
-      const data = await res.json();
-      const quickSearch = [
-        {
-          name: 'all',
-          label: 'All Mountains'
-        }
-      ];
-      Object.keys(data.regions).forEach(region => {
-        const regionObj = {
-          name: region,
-          label: this.formatLabel(region)
-        }
-        quickSearch.push(regionObj)
-      })
-      this.quickSearch = quickSearch;
-      this.locationList = data.resorts;
+    if (sessionStorage.quickSearch && sessionStorage.locationList) {
+      this.quickSearch = JSON.parse(sessionStorage.quickSearch);
+      this.locationList = JSON.parse(sessionStorage.locationList);
+    } else {
+      const res = await fetch(`https://b2y7xrww3j.execute-api.us-east-1.amazonaws.com/production/resorts`);
+      if (res.ok) {
+        const data = await res.json();
+        const quickSearch = [
+          {
+            name: 'all',
+            label: 'All Mountains'
+          }
+        ];
+        Object.keys(data.regions).forEach(region => {
+          const regionObj = {
+            name: region,
+            label: this.formatLabel(region)
+          }
+          quickSearch.push(regionObj);
+        });
+        this.quickSearch = quickSearch;
+        this.locationList = data.resorts;
+      }
+    }
+  },
+  watch: {
+    quickSearch(newData) {
+      sessionStorage.quickSearch = JSON.stringify(newData);
+    },
+    locationList(newData) {
+      sessionStorage.locationList = JSON.stringify(newData);
     }
   }
 };
