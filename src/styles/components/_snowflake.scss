@@ -1,3 +1,5 @@
+@use '../abstracts/' as *;
+
 .loading {
   position: absolute;
   z-index: 1;
@@ -15,7 +17,7 @@
   --size: 1vw;
   width: var(--size);
   height: var(--size);
-  background: white;
+  background: $gray-lt;
   border-radius: 50%;
   position: absolute;
   top: -5vh;
