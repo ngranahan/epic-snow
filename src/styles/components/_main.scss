@@ -11,6 +11,17 @@
   }
 }
 
+.main__grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.main__back {
+  margin-bottom: rem(20);
+}
+
 .main-fade-enter-active,
 .main-fade-leave-active {
   transition: opacity .5s;

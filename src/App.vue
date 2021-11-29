@@ -6,18 +6,21 @@
     <main class="main">
       <div v-if="locationList.length">
         <transition name="main-fade">
-          <div class="container container--spread">
-            <QueryForm
-              v-if="!results.length"
-              :locationList="locationList"
-              :quickSearch="quickSearch"
-              @formSubmit="getData"
-            ></QueryForm>
-            <Card
-              v-for="result in results"
-              :key="result.location"
-              :result="result"
-            ></Card>
+          <div class="container">
+            <a v-if="results.length" href="/" class="main__back body-primary text-brand">Back to Search</a>
+            <div class="main__grid">
+              <QueryForm
+                v-if="!results.length"
+                :locationList="locationList"
+                :quickSearch="quickSearch"
+                @formSubmit="getData"
+              ></QueryForm>
+              <Card
+                v-for="result in results"
+                :key="result.location"
+                :result="result"
+              ></Card>
+            </div>
           </div>
         </transition>
       </div>
